@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'appbar.dart';
+import 'theme.dart';
 
 class rescueApp extends StatelessWidget {
   const rescueApp({Key? key}) : super(key: key);
@@ -6,13 +8,9 @@ class rescueApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        
-      ),
+      theme: myTheme(),
       home: Scaffold(
-        appBar: AppBar(
-
-        ),
+        appBar: MyAppBar(),
         body: Container(
 
         ),
