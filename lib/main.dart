@@ -6,12 +6,15 @@ class rescueApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        
+      ),
       home: Scaffold(
         appBar: AppBar(
 
         ),
         body: Container(
-          
+
         ),
       ),
     );
