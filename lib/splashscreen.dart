@@ -10,7 +10,6 @@ class Splashscreen extends StatefulWidget {
 }
 
 class _SplashscreenState extends State<Splashscreen> {
-  
   //delay 3 seconds to menu
   Future delay() async {
     await Future.delayed(Duration(seconds: 5), () {
@@ -42,14 +41,14 @@ class _SplashscreenState extends State<Splashscreen> {
                   width: 300,
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 100,
                 ),
                 Lottie.asset('images/animation/medicalloading.json',
-                    height: 100, width: 100),
+                    height: 120, width: 120),
                 Text(
                   'กำลังโหลดข้อมูล....',
                   style: GoogleFonts.kanit(
-                  fontSize: 15,
+                    fontSize: 20,
                   ),
                 )
               ],
