@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rescueapp/splashscreen.dart';
 import 'emergency.dart';
 import '/firstaid.dart';
 import '/firstaid/sleep.dart';
@@ -21,7 +22,10 @@ class rescueApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: myTheme(),
+      initialRoute: '/splashscreen',
+      home: Menu(),
       routes: {
+        '/splashscreen': (context) => Splashscreen(),
         '/menu' :(context) => Menu(),
         '/firstaid' :(context) => FirstAid(),
         '/breakbone' :(context) => BreakBone(),
@@ -29,7 +33,7 @@ class rescueApp extends StatelessWidget {
         '/sleep' :(context) => Sleep(),
         '/emergency' :(context) => Emergency(),
       },
-      home: Menu(),
+      
     );
   }
 }
