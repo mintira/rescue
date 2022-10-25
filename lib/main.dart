@@ -17,7 +17,6 @@ void main() {
 
 class rescueApp extends StatelessWidget {
   const rescueApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,7 +32,6 @@ class rescueApp extends StatelessWidget {
         '/sleep' :(context) => Sleep(),
         '/emergency' :(context) => Emergency(),
       },
-      
     );
   }
 }
