@@ -1,10 +1,13 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import '../appbar.dart';
 import '../bottombar.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/key.dart';
+
 
 class EmerPin extends StatefulWidget {
   EmerPin({Key? key}) : super(key: key);
@@ -89,7 +92,7 @@ class _EmerPinState extends State<EmerPin> {
                             width: 5,
                           ),
                           Text(
-                            'กรุณาปักหมุดที่อยู่\nของท่านในปัจจุบัน',
+                            'กรุณาเลือกที่อยู่\nของท่านในปัจจุบัน',
                             style: GoogleFonts.kanit(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
@@ -102,19 +105,7 @@ class _EmerPinState extends State<EmerPin> {
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
-                      ),
-                      height: 200,
-                      ////////////////////////////////////////////////////
-                      ///
-                      ///ใส่แผนที่ปักหมุด
-                      ///
-                      ///
-                      ///////////////////////////////////////////////////
-                    ),
+                    LocaDropdown(),
                   ],
                 ),
               ),
@@ -173,5 +164,66 @@ class _EmerPinState extends State<EmerPin> {
       ),
       bottomNavigationBar: MyBottomNavigationBar(),
     );
+  }
+}
+
+class LocaDropdown extends StatefulWidget {
+  const LocaDropdown({Key? key}) : super(key: key);
+
+  @override
+  State<LocaDropdown> createState() => _LocaDropdownState();
+}
+
+class _LocaDropdownState extends State<LocaDropdown> {
+  final List<String> items = [
+    'อาคารตัวยู',
+    'คณะวิทยาศาสตร์',
+    'อาคารศูนย์การเรียนรู้',
+    'หอพัก',
+  ];
+String? selectedValue;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+        child: DropdownButton2(
+          hint: Text(
+            'เลือกจุดรับ',
+            style: GoogleFonts.kanit(
+                   fontSize: 18,
+              color: Theme
+                      .of(context)
+                      .hintColor,
+            ),
+          ),
+          items: items
+                  .map((item) =>
+                  DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: GoogleFonts.kanit(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ))
+                  .toList(),
+          value: selectedValue,
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value as String;
+            });
+          },
+          buttonHeight: 70,
+          buttonWidth: MediaQuery.of(context).size.width*0.8,
+          itemHeight: 70,
+          buttonDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            color: Colors.white,
+          ),
+          buttonPadding: EdgeInsets.only(left: 14, right: 14),
+        ),
+      );
   }
 }
