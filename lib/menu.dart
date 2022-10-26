@@ -60,7 +60,9 @@ class Menu extends StatelessWidget {
                       ),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/nearby');
+                          },
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                             child: Text(
@@ -188,7 +190,9 @@ class Menu extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/nearby');
+                        },
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
                           child: Column(

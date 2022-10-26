@@ -162,7 +162,7 @@ class EmerCheck extends StatelessWidget {
                   Navigator.pushNamed(context, '/emerwait');
                 },
                 child: Text(
-                  'ถัดไป',
+                  'ยืนยัน',
                   style: GoogleFonts.kanit(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,

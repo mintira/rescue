@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rescueapp/emergency/emer_check.dart';
-import 'package:rescueapp/emergency/emer_pin.dart';
-import 'package:rescueapp/emergency/emer_wait.dart';
+import 'callhospital.dart';
+import '/emergency/emer_check.dart';
+import '/emergency/emer_pin.dart';
+import '/emergency/emer_wait.dart';
+import '/nearby.dart';
 import '/emergency/emer_start.dart';
 import 'splashscreen.dart';
 import 'emergency.dart';
@@ -36,6 +38,8 @@ class rescueApp extends StatelessWidget {
         '/emerpin' :(context) => EmerPin(),
         '/emercheck' :(context) => EmerCheck(),
         '/emerwait' :(context) => EmerWait(),
+        '/nearby' :(context) => NearBy(),
+        '/call' :(context) => CallHospital(),
       },
     );
   }

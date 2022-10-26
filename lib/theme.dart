@@ -7,8 +7,5 @@ ThemeData myTheme() {
         color: Colors.white,
         elevation: 0,
       ),
-      textTheme: TextTheme(
-        bodyText1: GoogleFonts.kanit(),
-      ),
     );
   }

@@ -44,7 +44,9 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           }
           break;
         case 2:
-
+          if (_selectedIndex == index) {
+            Navigator.pushReplacementNamed(context, '/call');
+          }
           break;
       }
     });
