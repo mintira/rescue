@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rescueapp/emergency.dart';
 
 import '../appbar.dart';
 import '../bottombar.dart';
+import 'emer_pin.dart';
 
-class EmerStart extends StatelessWidget {
-  const EmerStart({Key? key}) : super(key: key);
+class EmerStart extends StatefulWidget {
+  final Symptomsid;
+  final Symptomsname;
+  final Symptomsimage;
 
+  const EmerStart(
+      {Key? key,
+      required this.Symptomsid,
+      required this.Symptomsname,
+      required this.Symptomsimage})
+      : super(key: key);
+
+  @override
+  State<EmerStart> createState() => _EmerStartState();
+}
+
+class _EmerStartState extends State<EmerStart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +88,15 @@ class EmerStart extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/emerpin');
+                  // Navigator.pushNamed(context, '/emerpin');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EmerPin(
+                                Symptomsid: widget.Symptomsid,
+                                Symptomsname: widget.Symptomsname,
+                                Symptomsimage: widget.Symptomsimage,
+                              )));
                 },
                 child: Text(
                   'เริ่ม',

@@ -1,11 +1,66 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:rescueapp/emergency.dart';
+import 'package:http/http.dart' as http;
 import '../appbar.dart';
 import '../bottombar.dart';
 
-class EmerCheck extends StatelessWidget {
-  const EmerCheck({Key? key}) : super(key: key);
+class EmerCheck extends StatefulWidget {
+  final Symptomsid;
+  final Symptomsname;
+  final Symptomsimage;
+  final Locationid;
+  final Locationname;
+
+  const EmerCheck(
+      {Key? key,
+      required this.Symptomsid,
+      required this.Symptomsname,
+      required this.Symptomsimage,
+      required this.Locationid,
+      required this.Locationname})
+      : super(key: key);
+
+  @override
+  State<EmerCheck> createState() => _EmerCheckState();
+}
+
+class _EmerCheckState extends State<EmerCheck> {
+  //Variable
+
+  Future AddEmergency() async {
+    var url = Uri.parse(
+        'https://rescue.relaxlikes.com/api/emergency/insert_emergency.php');
+    var response = await http.post(url, body: {
+      'symptom_id': widget.Symptomsid,
+      'location_id': widget.Locationid,
+    });
+    var data = json.decode(response.body);
+    
+    if (data == 'Success') {
+      Fluttertoast.showToast(
+          msg: "แจ้งเหตุสำเร็จ กรุณารอการตอบรับจากเจ้าหน้าที่",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      Navigator.pushNamed(context, '/emerwait');
+    } else {
+      Fluttertoast.showToast(
+          msg: "แจ้งเหตุไม่สำเร็จ กรุณาลองใหม่อีกครั้ง",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +127,21 @@ class EmerCheck extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.mood_bad,
-                              color: Colors.red,
-                              size: 100,
+                            // Icon(
+                            //   Icons.mood_bad,
+                            //   color: Colors.red,
+                            //   size: 100,
+                            // ),
+                            Image.network(
+                              'https://rescue.relaxlikes.com/images/symptoms/${widget.Symptomsimage}',
+                              width: 50,
+                              height: 50,
+                            ),
+                            SizedBox(
+                              width: 10,
                             ),
                             Text(
-                              'บาดเจ็บรุนแรง',
+                              '${widget.Symptomsname}',
                               style: GoogleFonts.kanit(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
@@ -112,14 +175,22 @@ class EmerCheck extends StatelessWidget {
                                 Icon(
                                   Icons.location_pin,
                                   color: Colors.red,
-                                  size: 100,
+                                  size: 50,
                                 ),
-                                Text(
-                                  'ที่อยู่',
-                                  style: GoogleFonts.kanit(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    '${widget.Locationname}',
+                                    softWrap: false,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.kanit(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 )
                               ],
@@ -127,20 +198,23 @@ class EmerCheck extends StatelessWidget {
                             SizedBox(
                               height: 10,
                             ),
-                            Container(
-                              margin: EdgeInsets.only(bottom: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Colors.lightBlue[200],
-                              ),
-                              height: 200,
-                              ////////////////////////////////////////////////////
-                              ///
-                              ///ใส่แผนที่ปักหมุด
-                              ///
-                              ///
-                              ///////////////////////////////////////////////////
-                            ),
+                            // Container(
+                            //   width: MediaQuery.of(context).size.width,
+                            //   height: MediaQuery.of(context).size.height * 0.2,
+                            //   margin: EdgeInsets.only(bottom: 20),
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(30),
+                            //     color: Colors.lightBlue[200],
+                            //   ),
+                            //   child: Text(
+                            //     widget.Locationname,
+                            //     style: GoogleFonts.kanit(
+                            //       fontSize: 18,
+                            //       fontWeight: FontWeight.w500,
+                            //       color: Colors.black,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -159,7 +233,7 @@ class EmerCheck extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/emerwait');
+                  AddEmergency();
                 },
                 child: Text(
                   'ยืนยัน',

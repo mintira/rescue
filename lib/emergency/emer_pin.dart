@@ -2,15 +2,22 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:rescueapp/emergency.dart';
 import '../appbar.dart';
 import '../bottombar.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+import 'emer_check.dart';
 
 class EmerPin extends StatefulWidget {
-  EmerPin({Key? key}) : super(key: key);
+
+  final Symptomsid;
+  final Symptomsname;
+  final Symptomsimage;
+
+  EmerPin({Key? key,required this.Symptomsid,required this.Symptomsname,required this.Symptomsimage}) : super(key: key);
 
   @override
   State<EmerPin> createState() => _EmerPinState();
@@ -19,11 +26,19 @@ class EmerPin extends StatefulWidget {
 class _EmerPinState extends State<EmerPin> {
   //Variable
   List location = [];
-  String? selectedItem;
+  // final List<String> items = [
+  //   'อาคารตัวยู',
+  //   'คณะวิทยาศาสตร์',
+  //   'อาคารศูนย์การเรียนรู้',
+  //   'หอพัก',
+  // ];
+  String? selectedValue;
+  String? selectedNameItem;
 
 //get data from api
   Future getlocation() async {
-    var url = Uri.parse('https://rescue.relaxlikes.com/api/location/viewlocation.php');
+    var url = Uri.parse(
+        'https://rescue.relaxlikes.com/api/location/viewlocation.php');
     var response = await http.get(url);
     var data = json.decode(response.body);
     setState(() {
@@ -32,7 +47,6 @@ class _EmerPinState extends State<EmerPin> {
     print(location.toString());
     return location;
   }
-
 
   //init state
   @override
@@ -105,7 +119,49 @@ class _EmerPinState extends State<EmerPin> {
                     SizedBox(
                       height: 20,
                     ),
-                    LocaDropdown(),
+                    // LocaDropdown(),
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        isExpanded: true,
+                        hint: Text(
+                          'เลือกจุดรับ',
+                          style: GoogleFonts.kanit(
+                            fontSize: 18,
+                            color: Theme.of(context).hintColor,
+                          ),
+                        ),
+                        items: location
+                            .map((item) => DropdownMenuItem(
+                                  value: item['location_id'].toString(),
+                                  child: Text(
+                                    item['location_name'],
+                                    style: GoogleFonts.kanit(
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        value: selectedValue,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedValue = value as String;
+                            selectedNameItem = location
+                                .where((element) =>
+                                    element['location_id'] == selectedValue)
+                                .first['location_name'];
+                            print(selectedNameItem);
+                          });
+                        },
+                        buttonHeight: 70,
+                        buttonWidth: MediaQuery.of(context).size.width * 0.8,
+                        itemHeight: 70,
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: Colors.white,
+                        ),
+                        buttonPadding: EdgeInsets.only(left: 14, right: 14),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -114,7 +170,19 @@ class _EmerPinState extends State<EmerPin> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/emercheck');
+                  // Navigator.pushNamed(context, '/emercheck');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EmerCheck(
+                        Symptomsid: widget.Symptomsid,
+                        Symptomsname: widget.Symptomsname,
+                        Symptomsimage: widget.Symptomsimage,
+                        Locationid: selectedValue,
+                        Locationname: selectedNameItem,
+                      ),
+                    ),
+                  );
                 },
                 child: Text(
                   'ถัดไป',
@@ -167,63 +235,61 @@ class _EmerPinState extends State<EmerPin> {
   }
 }
 
-class LocaDropdown extends StatefulWidget {
-  const LocaDropdown({Key? key}) : super(key: key);
-
-  @override
-  State<LocaDropdown> createState() => _LocaDropdownState();
-}
-
-class _LocaDropdownState extends State<LocaDropdown> {
-  final List<String> items = [
-    'อาคารตัวยู',
-    'คณะวิทยาศาสตร์',
-    'อาคารศูนย์การเรียนรู้',
-    'หอพัก',
-  ];
-String? selectedValue;
 
 
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-        child: DropdownButton2(
-          hint: Text(
-            'เลือกจุดรับ',
-            style: GoogleFonts.kanit(
-                   fontSize: 18,
-              color: Theme
-                      .of(context)
-                      .hintColor,
-            ),
-          ),
-          items: items
-                  .map((item) =>
-                  DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: GoogleFonts.kanit(
-                        fontSize: 18,
-                      ),
-                    ),
-                  ))
-                  .toList(),
-          value: selectedValue,
-          onChanged: (value) {
-            setState(() {
-              selectedValue = value as String;
-            });
-          },
-          buttonHeight: 70,
-          buttonWidth: MediaQuery.of(context).size.width*0.8,
-          itemHeight: 70,
-          buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            color: Colors.white,
-          ),
-          buttonPadding: EdgeInsets.only(left: 14, right: 14),
-        ),
-      );
-  }
-}
+// class LocaDropdown extends StatefulWidget {
+//   const LocaDropdown({Key? key}) : super(key: key);
+
+//   @override
+//   State<LocaDropdown> createState() => _LocaDropdownState();
+// }
+
+// class _LocaDropdownState extends State<LocaDropdown> {
+//   final List<String> items = [
+//     'อาคารตัวยู',
+//     'คณะวิทยาศาสตร์',
+//     'อาคารศูนย์การเรียนรู้',
+//     'หอพัก',
+//   ];
+//   String? selectedValue;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return DropdownButtonHideUnderline(
+//       child: DropdownButton2(
+//         hint: Text(
+//           'เลือกจุดรับ',
+//           style: GoogleFonts.kanit(
+//             fontSize: 18,
+//             color: Theme.of(context).hintColor,
+//           ),
+//         ),
+//         items: items
+//             .map((item) => DropdownMenuItem<String>(
+//                   value: item,
+//                   child: Text(
+//                     item,
+//                     style: GoogleFonts.kanit(
+//                       fontSize: 18,
+//                     ),
+//                   ),
+//                 ))
+//             .toList(),
+//         value: selectedValue,
+//         onChanged: (value) {
+//           setState(() {
+//             selectedValue = value as String;
+//           });
+//         },
+//         buttonHeight: 70,
+//         buttonWidth: MediaQuery.of(context).size.width * 0.8,
+//         itemHeight: 70,
+//         buttonDecoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(14),
+//           color: Colors.white,
+//         ),
+//         buttonPadding: EdgeInsets.only(left: 14, right: 14),
+//       ),
+//     );
+//   }
+// }

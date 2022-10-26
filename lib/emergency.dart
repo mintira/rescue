@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import '../appbar.dart';
 import '../bottombar.dart';
+import 'emergency/emer_start.dart';
 
 class Emergency extends StatefulWidget {
   const Emergency({Key? key}) : super(key: key);
@@ -21,8 +22,8 @@ class _EmergencyState extends State<Emergency> {
   List<Symptoms> symptom = [];
 
   Future getSymptoms() async {
-    var url = Uri.parse(
-        'https://rescue.relaxlikes.com/api/symptom/viewsymptom.php');
+    var url =
+        Uri.parse('https://rescue.relaxlikes.com/api/symptom/viewsymptom.php');
     var response = await http.get(url);
     var data = json.decode(response.body);
     for (var i = 0; i < data.length; i++) {
@@ -127,11 +128,13 @@ class _EmergencyState extends State<Emergency> {
                               );
                             } else {
                               return Container(
-                                height: MediaQuery.of(context).size.height * 0.6,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.6,
                                 child: ListView.builder(
                                   itemCount: symptom.length,
                                   itemBuilder: (context, index) {
-                                    return SymptomsCard(symptoms: symptom[index]);
+                                    return SymptomsCard(
+                                        symptoms: symptom[index]);
                                   },
                                 ),
                               );
@@ -155,9 +158,9 @@ class _EmergencyState extends State<Emergency> {
 class Symptoms {
   String? symptomid;
   String? symptomname;
-  String? description;
+  String? symptomsimage;
 
-  Symptoms(this.symptomid, this.symptomname, this.description);
+  Symptoms(this.symptomid, this.symptomname, this.symptomsimage);
 }
 
 class SymptomsCard extends StatefulWidget {
@@ -176,7 +179,15 @@ class _SymptomsCardState extends State<SymptomsCard> {
       margin: EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/emerstart');
+          // Navigator.pushNamed(context, '/emerstart');
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return EmerStart(
+              Symptomsid: widget.symptoms.symptomid,
+              Symptomsname: widget.symptoms.symptomname,
+              Symptomsimage: widget.symptoms.symptomsimage,
+            );
+          }));
+
           print(widget.symptoms.symptomid);
         },
         child: Padding(
@@ -190,7 +201,7 @@ class _SymptomsCardState extends State<SymptomsCard> {
               //   size: 100,
               // ),
               Image.network(
-                'https://rescue.relaxlikes.com/images/symptoms/${widget.symptoms.description}',
+                'https://rescue.relaxlikes.com/images/symptoms/${widget.symptoms.symptomsimage}',
                 width: 100,
                 height: 100,
               ),
