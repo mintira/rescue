@@ -43,14 +43,18 @@ class Emergency extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        
+                        Navigator.pushNamed(context, '/emerstart');
                       },
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [  
-                            Icon(Icons.mood_bad,color: Colors.red,size: 100,),  
+                          children: [
+                            Icon(
+                              Icons.mood_bad,
+                              color: Colors.red,
+                              size: 100,
+                            ),
                             Text(
                               'บาดเจ็บรุนแรง',
                               style: GoogleFonts.kanit(
@@ -63,22 +67,24 @@ class Emergency extends StatelessWidget {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
+                        primary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
+                      ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        
-                      },
+                      onPressed: () {},
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.sentiment_dissatisfied,color: Colors.amber[700],size: 100,),
+                            Icon(
+                              Icons.sentiment_dissatisfied,
+                              color: Colors.amber[700],
+                              size: 100,
+                            ),
                             Text(
                               'บาดเจ็บปานกลาง',
                               style: GoogleFonts.kanit(
@@ -87,7 +93,6 @@ class Emergency extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            
                           ],
                         ),
                       ),
@@ -98,15 +103,17 @@ class Emergency extends StatelessWidget {
                           )),
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        
-                      },
+                      onPressed: () {},
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Icon(Icons.sentiment_dissatisfied,color: Colors.lime,size: 100,),
+                            Icon(
+                              Icons.sentiment_dissatisfied,
+                              color: Colors.lime,
+                              size: 100,
+                            ),
                             Text(
                               'บาดเจ็บเล็กน้อย',
                               style: GoogleFonts.kanit(

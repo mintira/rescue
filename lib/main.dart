@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:rescueapp/splashscreen.dart';
+import 'package:rescueapp/emergency/emer_check.dart';
+import 'package:rescueapp/emergency/emer_pin.dart';
+import 'package:rescueapp/emergency/emer_wait.dart';
+import '/emergency/emer_start.dart';
+import 'splashscreen.dart';
 import 'emergency.dart';
 import '/firstaid.dart';
 import '/firstaid/sleep.dart';
-import 'appbar.dart';
-import 'bottombar.dart';
 import 'firstaid/blood.dart';
 import 'firstaid/breakbone.dart';
 import 'menu.dart';
@@ -31,6 +32,10 @@ class rescueApp extends StatelessWidget {
         '/blood' :(context) => Blood(),
         '/sleep' :(context) => Sleep(),
         '/emergency' :(context) => Emergency(),
+        '/emerstart' :(context) => EmerStart(),
+        '/emerpin' :(context) => EmerPin(),
+        '/emercheck' :(context) => EmerCheck(),
+        '/emerwait' :(context) => EmerWait(),
       },
     );
   }
