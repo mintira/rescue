@@ -1,11 +1,43 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:http/http.dart' as http;
 import '../appbar.dart';
 import '../bottombar.dart';
 
-class EmerPin extends StatelessWidget {
-  const EmerPin({Key? key}) : super(key: key);
+class EmerPin extends StatefulWidget {
+  EmerPin({Key? key}) : super(key: key);
+
+  @override
+  State<EmerPin> createState() => _EmerPinState();
+}
+
+class _EmerPinState extends State<EmerPin> {
+  //Variable
+  List location = [];
+  String? selectedItem;
+
+//get data from api
+  Future getlocation() async {
+    var url = Uri.parse('https://rescue.relaxlikes.com/api/location/viewlocation.php');
+    var response = await http.get(url);
+    var data = json.decode(response.body);
+    setState(() {
+      location = data;
+    });
+    print(location.toString());
+    return location;
+  }
+
+
+  //init state
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getlocation();
+  }
 
   @override
   Widget build(BuildContext context) {
