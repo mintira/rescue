@@ -46,7 +46,7 @@ class _SplashscreenState extends State<Splashscreen> {
                 Lottie.asset('images/animation/medicalloading.json',
                     height: 120, width: 120),
                 Text(
-                  'กำลังโหลดข้อมูล....',
+                  'กำลังเริ่มต้น....',
                   style: GoogleFonts.kanit(
                     fontSize: 20,
                   ),
